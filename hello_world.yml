@@ -4,18 +4,26 @@
   become: yes
 
   tasks:
+    - name: Print message before installing Nginx
+      debug:
+        msg: "Installing Nginx..."
+
     - name: Install Nginx
       apt:
         name: nginx
         state: present
         update_cache: yes
 
-    - name: Configure Nginx to listen on a different port
+    - name: Configure Nginx to listen on port 8081
       lineinfile:
         path: /etc/nginx/sites-available/default
         regexp: 'listen 80 default_server;'
-        line: 'listen 9090 default_server;'
+        line: 'listen 8081 default_server;'
         state: present
+
+    - name: Print message after configuring Nginx
+      debug:
+        msg: "Nginx configured successfully."
 
     - name: Restart Nginx
       service:
