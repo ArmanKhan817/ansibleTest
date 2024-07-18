@@ -1,7 +1,23 @@
 ---
-- name: Hello World
+- name: Deploy and configure Nginx
   hosts: all
+  become: yes
+
   tasks:
-    - name: Print Hello World
-      debug:
-        msg: "Hello, World!"
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Configure Nginx to listen on a different port
+      lineinfile:
+        path: /etc/nginx/sites-available/default
+        regexp: 'listen 80 default_server;'
+        line: 'listen 8080 default_server;'
+        state: present
+
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
