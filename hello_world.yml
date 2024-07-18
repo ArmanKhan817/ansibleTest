@@ -1,14 +1,9 @@
 ---
-- name: Deploy and configure Nginx
+- name: Install Nginx
   hosts: all
   become: yes
-
   tasks:
-    - name: Print message before installing Nginx
-      debug:
-        msg: "Installing Nginx..."
-
-    - name: Install Nginx
+    - name: Install Nginx package
       apt:
         name: nginx
         state: present
@@ -20,10 +15,6 @@
         regexp: 'listen 80 default_server;'
         line: 'listen 8081 default_server;'
         state: present
-
-    - name: Print message after configuring Nginx
-      debug:
-        msg: "Nginx configured successfully."
 
     - name: Restart Nginx
       service:
