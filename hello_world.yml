@@ -1,22 +1,7 @@
 ---
-- name: Install Nginx
-  hosts: all
-  become: yes
+- name: Hello World Playbook
+  hosts: local
   tasks:
-    - name: Install Nginx package
-      apt:
-        name: nginx
-        state: present
-        update_cache: yes
-
-    - name: Configure Nginx to listen on port 8081
-      lineinfile:
-        path: /etc/nginx/sites-available/default
-        regexp: 'listen 80 default_server;'
-        line: 'listen 8081 default_server;'
-        state: present
-
-    - name: Restart Nginx
-      service:
-        name: nginx
-        state: restarted
+    - name: Print Hello, World!
+      ansible.builtin.debug:
+        msg: "Hello, World!"
