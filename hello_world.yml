@@ -1,8 +1,17 @@
 ---
-- name: Test SSH connectivity
+- name: Install NGINX on the target server
   hosts: all
-  gather_facts: no
-  tasks:
-    - name: Ping the target host
-      ping:
+  become: yes
 
+  tasks:
+    - name: Install NGINX
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Start NGINX service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
