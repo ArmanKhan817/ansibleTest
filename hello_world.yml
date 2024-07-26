@@ -1,7 +1,17 @@
 ---
-- name: Hello World Playbook
-  hosts: local
+- name: Install NGINX on the target server
+  hosts: all
+  become: yes
+
   tasks:
-    - name: Print Hello, World!
-      ansible.builtin.debug:
-        msg: "Hello, World!"
+    - name: Install NGINX
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Start NGINX service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
