@@ -7,27 +7,19 @@
       apt:
         name: apache2
         state: present
-      when: ansible_distribution in ['Debian', 'Ubuntu']
+      when: ansible_facts['os_family'] == "Debian"
 
     - name: Install Apache on Red Hat-based systems
       yum:
         name: httpd
         state: present
-      when: ansible_distribution in ['RedHat', 'CentOS', 'Fedora']
+      when: ansible_facts['os_family'] == "RedHat"
 
-    - name: Ensure Apache is running
+    - name: Ensure Apache is running on Debian-based systems
       service:
         name: apache2
         state: started
         enabled: yes
-      when: ansible_distribution in ['Debian', 'Ubuntu']
+      when: ansible_facts['os_family'] == "Debian"
 
-    - name: Ensure Apache is running
-      service:
-        name: httpd
-        state: started
-        enabled: yes
-      when: ansible_distribution in ['RedHat', 'CentOS', 'Fedora']
-
-
-
+    - name: Ensure Apache is running on Red Hat-based systems
